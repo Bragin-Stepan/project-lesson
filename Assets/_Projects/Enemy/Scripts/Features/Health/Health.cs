@@ -5,73 +5,61 @@ namespace Project.Enemy
 {
    public class Health
     {
-        public event Action<float, float> Changed;
         public event Action Dead;
         
-        private readonly float _maxValue;
-        private float _currentValue;
+        private ReactiveVariable<float> _max;
+        private ReactiveVariable<float> _current;
         private bool _isDead;
 
         public Health(float maxValue)
         {
-            _maxValue = maxValue;
-            _currentValue = _maxValue;
+            _max = new ReactiveVariable<float>(maxValue) ;
+            _current = new ReactiveVariable<float>(maxValue) ;
         }
         
-        public float CurrentValue => _currentValue;
-        public float MaxValue => _maxValue;
+        public IReadOnlyVariable<float> Current => _current;
+        public IReadOnlyVariable<float> Max => _max;
         
         public void Increase(float value)
         {
             if (value < 0 || _isDead)
                 return;
-
-            float oldValue = _currentValue;
-            _currentValue += value;
-
-            if (_currentValue > _maxValue)
-                _currentValue = _maxValue;
             
-            Changed?.Invoke(oldValue, _currentValue);
+            _current.Value += value;
+
+            if (_current.Value > _max.Value)
+                _current.Value = _max.Value;
         }
 
         public void Reduce(float value)
         {
             if (value < 0 || _isDead)
                 return;
-
-            float oldValue = _currentValue;
-            _currentValue -= value;
             
-            if (_currentValue <= 0)
+            _current.Value -= value;
+            
+            if (_current.Value <= 0)
             {
-                _currentValue = 0;
+                _current.Value = 0;
 
                 _isDead = true;
                 Dead?.Invoke();
             }
-            
-            Changed?.Invoke(oldValue, _currentValue);
         }
         
         public void Kill()
         {
-            float oldValue = _currentValue;
-            _currentValue = 0;
+            _current.Value = 0;
             
             _isDead = true;
             
             Dead?.Invoke();
-            Changed?.Invoke(oldValue, _currentValue);
         }
 
         public void Reset()
         {
-            float oldValue = _currentValue;
-            _currentValue = _maxValue;
+            _current.Value = _max.Value;
             _isDead = false;
-            
-            Changed?.Invoke(oldValue, _currentValue);
         }
     }
 }
