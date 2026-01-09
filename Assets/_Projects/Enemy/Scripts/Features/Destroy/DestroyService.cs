@@ -1,79 +1,48 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
+using UnityEngine;
 
 namespace Project.Enemy
 {
     public class DestroyService: IDisposable
     {
-        private readonly Dictionary<IDestroyable, List<ICauseDestroy>> _dictionary = new();
-        private readonly int _maxLimit;
+        private readonly Dictionary<IDestroyable, List<Func<bool>>> _dictionary = new();
+        private readonly MonoBehaviour _coroutineContext;
 
         public int Count => _dictionary.Count;
 
-        public DestroyService(int maxLimit)
+        public DestroyService(MonoBehaviour coroutineContext)
         {
-            _maxLimit = maxLimit;
+            _coroutineContext = coroutineContext;
         }
         
-        public void Register(IDestroyable target, List<ICauseDestroy> causes)
+        public void Register(IDestroyable target, List<Func<bool>> causes)
         {
-            Add(target, causes);
-            
-            if (_dictionary.Count >= _maxLimit)
-                OverLimitClear();
+            _dictionary.TryAdd(target, causes);
+            _coroutineContext.StartCoroutine(WaitCauseDestroy(target, causes));
         }
 
-        private void Unregister(IDestroyable target)
-        {
-            foreach (ICauseDestroy cause in _dictionary[target])
-                cause.Destroyed -= DestroyTarget;
-            
-            _dictionary.Remove(target);
-        }
-        
         private void DestroyTarget(IDestroyable target)
         {
-            DisposeAllCauses(target);
-            Unregister(target);
+            _dictionary.Remove(target);
             target.Destroy();
         }
-
-        private void Add(IDestroyable target, List<ICauseDestroy> causes)
+        
+        private IEnumerator<Func<bool>> WaitCauseDestroy(IDestroyable target, List<Func<bool>> causes)
         {
-            _dictionary[target] = causes;
-            
-            foreach (ICauseDestroy cause in causes)
-                cause.Destroyed += DestroyTarget;
+            while (_dictionary.ContainsKey(target))
+                foreach (Func<bool> cause in causes)
+                    if (cause.Invoke())
+                    {
+                        DestroyTarget(target);
+                        yield break;
+                    }
+                
+            yield return null;
         }
-
-        private void OverLimitClear()
-        {
-            if (_maxLimit <= 0) 
-                return;
-
-            List<IDestroyable> targets = _dictionary.Keys
-                .Where(target => _dictionary[target]
-                    .Any(cause => cause is OverLimitIsCauseDestroy))
-                .ToList();
-
-            foreach (IDestroyable target in targets)
-                DestroyTarget(target);
-        }
-
-        private void DisposeAllCauses(IDestroyable target)
-        {
-            foreach (ICauseDestroy cause in _dictionary[target])
-                if (cause is IDisposable disposable)
-                    disposable.Dispose();
-        }
-
 
         public void Dispose()
         {
-            foreach (ICauseDestroy cause in _dictionary.Keys.SelectMany(target=> _dictionary[target]))
-                cause.Destroyed -= DestroyTarget;
-
             _dictionary.Clear();
         }
     }

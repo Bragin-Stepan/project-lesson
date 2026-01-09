@@ -4,26 +4,21 @@ using UnityEngine;
 namespace Project.Enemy
 {
     [SelectionBase]
-    public class Enemy: MonoBehaviour, IDestroyable, IKillable
+    public class Enemy: MonoBehaviour, IDestroyable, IKillable, IWithLifetime
     {
-        public event Action<IKillable> Dead;
-
         private Health _health = new(4);
 
-        private void Awake()
+        public float CurrentHealth => _health.Current.Value;
+        public float Lifetime { get; private set; }
+
+        private void FixedUpdate()
         {
-            _health.Dead += OnDead;
+            Lifetime += Time.fixedDeltaTime;
         }
 
         public void Destroy() => Destroy(gameObject);
 
         public void Kill() => _health.Kill();
-        
-        private void OnDead() => Dead?.Invoke(this);
-        
-        private void OnDestroy()
-        {
-            _health.Dead -= OnDead;
-        }
+
     }
 }
