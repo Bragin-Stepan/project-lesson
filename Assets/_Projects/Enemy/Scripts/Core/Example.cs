@@ -18,7 +18,7 @@ namespace Project.Enemy
 
         private void Awake()
         {
-            _destroyService = new DestroyService(_maxEnemiesCount);
+            _destroyService = new DestroyService(this);
             _spawner = new ObjectSpawner<Enemy>();
         }
 
@@ -30,23 +30,22 @@ namespace Project.Enemy
                 
                 _destroyService.Register(
                     enemy,
-                    new List<ICauseDestroy>()
+                    new List<Func<bool>>
                     {
-                        new LifetimeIsCauseDestroy(enemy, 3, this)
+                        () => enemy.Lifetime >= 3f
                     });
             }
-        
             
             if (Input.GetKeyDown(KeyCode.Alpha2))
             {
                 Enemy enemy = _spawner.SpawnToPoint(_enemyTwoPrefab, _spawnPoint.position);
-
+                
                 _destroyService.Register(
                     enemy,
-                    new List<ICauseDestroy>()
+                    new List<Func<bool>>
                     {
-                        new DeathIsCauseDestroy(enemy),
-                        // new OverLimitIsCauseDestroy()
+                        () => enemy.CurrentHealth <= 0
+                        // () => enemy.Lifetime >= 3f
                     });
             }
             
@@ -56,12 +55,12 @@ namespace Project.Enemy
                 
                 _destroyService.Register(
                     enemy,
-                    new List<ICauseDestroy>()
+                    new List<Func<bool>>
                     {
-                        new OverLimitIsCauseDestroy()
+                        () => _destroyService.Count > _maxEnemiesCount
                     });
             }
-
+            
             Debug.Log("[DestroyService] Count: " + _destroyService.Count);
         }
     }
