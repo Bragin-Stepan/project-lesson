@@ -7,45 +7,35 @@ namespace Project.Wallet
     public class Currency
     {
         [SerializeField] private Sprite _icon;
-        [SerializeField] private int _currentValue;
         [SerializeField] private CurrencyType _type;
         
-        public event Action<CurrencyType, int, int> Changed;
-        
         public Sprite Icon => _icon;
-        public int Value => _currentValue;
+        public IReadOnlyVariable<int> Current => _current;
         public CurrencyType Type => _type;
+        
+        private ReactiveVariable<int> _current = new ();
         
         public bool TryAdd (int value)
         {
             if (value < 0)
                 return false;
-            
-            int oldValue = _currentValue;
-            _currentValue += value;
-            
-            Changed?.Invoke(_type, oldValue, _currentValue);
+
+            _current.Value += value;
 
             return true;
         }
         
         public bool TryReduce (int value)
         {
-            if (value < 0 || _currentValue == 0)
+            if (value < 0 || _current.Value == 0)
                 return false;
-            
-            int oldValue = _currentValue;
 
-            if (_currentValue < value)
-                _currentValue = 0;
+            if (_current.Value < value)
+                _current.Value = 0;
             else
-                _currentValue -= value;
-            
-            Changed?.Invoke(_type, oldValue, _currentValue);
+                _current.Value -= value;
             
             return true;
         }
     }
-    
-    // был выбор или все это держать в WalletService или добавлять сюда, решил сюда добавить
 }

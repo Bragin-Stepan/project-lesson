@@ -24,28 +24,37 @@ namespace Project.Wallet {
             
             _addButton.onClick.AddListener(OnAddButtonClick);
             _removeButton.onClick.AddListener(OnRemoveButtonClick);
+
+            _currency.Current.Changed += OnCurrencyChanged;
             
-            UpdateValue(currency.Value);
+            UpdateValue(currency.Current.Value);
         }
         
-        public void UpdateValue(int value) => _valueText.text = value.ToString();
+        private void UpdateValue(int value) => _valueText.text = value.ToString();
         
         private void OnAddButtonClick()
         {
             _currency.TryAdd(ValueButton);
-            UpdateValue(_currency.Value);
+            UpdateValue(_currency.Current.Value);
         }
-        
+
+        private void OnCurrencyChanged(int oldValue, int value)
+        {
+            UpdateValue(value);
+        }
+
         private void OnRemoveButtonClick()
         {
             _currency.TryReduce(ValueButton);
-            UpdateValue(_currency.Value);
+            UpdateValue(_currency.Current.Value);
         }
         
         private void OnDestroy()
         {
             _removeButton.onClick.RemoveListener(OnRemoveButtonClick);
             _addButton.onClick.RemoveListener(OnAddButtonClick);
+            
+            _currency.Current.Changed -= OnCurrencyChanged;
         }
     }
 }

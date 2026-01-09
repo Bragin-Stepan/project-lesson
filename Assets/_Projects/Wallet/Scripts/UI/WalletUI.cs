@@ -11,14 +11,10 @@ namespace Project.Wallet {
         [SerializeField] private CurrencyUI _currencyItemPrefab;
         
         private WalletService _walletService;
-        private Dictionary<CurrencyType, CurrencyUI> _currencies = new();
 
         public void Initialize(WalletService walletService)
         {
             _walletService = walletService;
-            
-            foreach (Currency currency in _walletService.Currencies)
-                currency.Changed += OnCurrencyChanged;
             
             SetupCurrenciesUI();
         }
@@ -29,22 +25,7 @@ namespace Project.Wallet {
             {
                 CurrencyUI ui = Instantiate(_currencyItemPrefab, _currencyContainer);
                 ui.Initialize(currency);
-                
-                _currencies[currency.Type] = ui;
             }
-        }
-        
-        private void OnCurrencyChanged(CurrencyType type, int oldValue, int value)
-        {
-            if (_currencies.TryGetValue(type, out CurrencyUI ui))
-                ui.UpdateValue(value);
-        }
-        
-        private void OnDisable()
-        {
-            if (_walletService?.Currencies != null)
-                foreach (Currency currency in _walletService.Currencies)
-                    currency.Changed -= OnCurrencyChanged;
         }
     }
 }
