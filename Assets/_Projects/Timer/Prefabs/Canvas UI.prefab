@@ -430,7 +430,7 @@ GameObject:
   - component: {fileID: 5307852071328695597}
   - component: {fileID: 1262265939121641389}
   - component: {fileID: 1367952039359883646}
-  - component: {fileID: 9054053481131623245}
+  - component: {fileID: 1508373046845354101}
   m_Layer: 5
   m_Name: Canvas UI
   m_TagString: Untagged
@@ -521,7 +521,7 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!114 &9054053481131623245
+--- !u!114 &1508373046845354101
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -530,15 +530,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 3982678954673945172}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 750344cc332442a9a6eeaf7148591519, type: 3}
+  m_Script: {fileID: 11500000, guid: b05bae713eae43ecb2fd50cad573f3c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _heartItemsContainer: {fileID: 3898913705394843471}
-  _heartItemPrefab: {fileID: 8909005920596481807, guid: 6808f5fb4fd666e4c83ca1742d4b8d8c, type: 3}
-  _slider: {fileID: 4970721219872482365}
-  _startButton: {fileID: 8907432404557174849}
-  _pauseButton: {fileID: 6629287367744808704}
-  _resetButton: {fileID: 5518269418691842565}
+  _itemsUI: {fileID: 8018550075510835436}
+  _buttonsUI: {fileID: 686346139846536833}
 --- !u!1 &4349306573089386063
 GameObject:
   m_ObjectHideFlags: 0
@@ -1279,6 +1275,8 @@ GameObject:
   m_Component:
   - component: {fileID: 4205879719376719770}
   - component: {fileID: 1565221373954241727}
+  - component: {fileID: 686346139846536833}
+  - component: {fileID: 8018550075510835436}
   m_Layer: 0
   m_Name: Health
   m_TagString: Untagged
@@ -1334,6 +1332,36 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!114 &686346139846536833
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8779691282458974012}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 750344cc332442a9a6eeaf7148591519, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _slider: {fileID: 4970721219872482365}
+  _startButton: {fileID: 8907432404557174849}
+  _pauseButton: {fileID: 6629287367744808704}
+  _resetButton: {fileID: 5518269418691842565}
+--- !u!114 &8018550075510835436
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8779691282458974012}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd8d555e918741aab45f18f82190548e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _heartItemsContainer: {fileID: 3898913705394843471}
+  _heartItemPrefab: {fileID: 8909005920596481807, guid: 6808f5fb4fd666e4c83ca1742d4b8d8c, type: 3}
 --- !u!1 &8877474946581479695
 GameObject:
   m_ObjectHideFlags: 0

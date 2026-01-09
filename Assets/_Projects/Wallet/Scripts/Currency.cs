@@ -10,8 +10,8 @@ namespace Project.Wallet
         [SerializeField] private CurrencyType _type;
         
         public Sprite Icon => _icon;
-        public IReadOnlyVariable<int> Current => _current;
         public CurrencyType Type => _type;
+        public IReadOnlyVariable<int> Current => _current;
         
         private ReactiveVariable<int> _current = new ();
         

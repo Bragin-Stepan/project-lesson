@@ -4,9 +4,9 @@ namespace Project.Timer
 {
     public class TimerExample: MonoBehaviour
     {
-        [SerializeField] private TimerExampleUI _uiPrefab;
+        [SerializeField] private HealthUI _uiPrefab;
 
-        private TimerExampleUI _ui;
+        private HealthUI _ui;
         private TimerService _timerService;
         private Health _health;
         
@@ -20,7 +20,7 @@ namespace Project.Timer
 
             _timerService.Ticked += OnTicked;
             _timerService.Start();
-            
+
             _ui = Instantiate(_uiPrefab, Vector3.zero, Quaternion.identity, null);
             _ui.Initialize(_health, _timerService);
         }
@@ -34,10 +34,10 @@ namespace Project.Timer
         {
             Debug.Log("Time: " + time);
             
-            if (_health.CurrentValue > 0)
+            if (_health.Current.Value > 0)
                 _health.Reduce(ReduceValue);
             
-            Debug.Log("Current Value: " + _health.CurrentValue);
+            Debug.Log("Current Value: " + _health.Current.Value);
         }
 
         private void OnDestroy()

@@ -4,10 +4,8 @@ using UnityEngine.UI;
 
 namespace Project.Timer
 {
-    public class TimerExampleUI: MonoBehaviour
+    public class HealthButtonsUI: MonoBehaviour
     {
-        [SerializeField] private HorizontalOrVerticalLayoutGroup _heartItemsContainer;
-        [SerializeField] private GameObject _heartItemPrefab;
         [SerializeField] private Slider _slider;
 
         [SerializeField] private Button _startButton;
@@ -16,25 +14,21 @@ namespace Project.Timer
         
         private Health _health;
         private TimerService _timer;
-        private List<GameObject> _heartItems = new();
         
         public void Initialize(Health health, TimerService timer)
-        {   
+        {
             _health = health;
             _timer = timer;
             
-            _slider.maxValue = _health.MaxValue;
-            _slider.value = _health.CurrentValue;
+            _slider.maxValue = _health.Max.Value;
+            _slider.value = _health.Current.Value;
             
             _startButton.onClick.AddListener(OnStart);
             _pauseButton.onClick.AddListener(OnPause);
             _resetButton.onClick.AddListener(OnReset);
             
             _slider.onValueChanged.AddListener(OnSliderValueChanged);
-            _health.Changed +=  OnHealthChanged;
-            
-            for (int i = 0; i < _health.MaxValue; i++)
-                AddHeartItemUI();
+            _health.Current.Changed +=  OnHealthChanged;
         }
 
         private void OnStart() => _timer.Start();
@@ -50,38 +44,18 @@ namespace Project.Timer
         private void OnHealthChanged(int oldValue, int currentValue)
         {
             _slider.value = currentValue;
-            
-            if (currentValue > oldValue)
-                for (int i = oldValue; i < currentValue; i++)
-                    AddHeartItemUI();
-            else if (currentValue < oldValue)
-                for (int i = currentValue; i < oldValue; i++)
-                    RemoveHeartItemUI();
         }
         
         private void OnSliderValueChanged(float changedValue)
         {
             int normalizedValue = (int)changedValue;
+            int currentValue = _health.Current.Value;
             
-            if (normalizedValue != _health.CurrentValue)
-                if (normalizedValue > _health.CurrentValue)
-                    _health.Increase(normalizedValue - _health.CurrentValue);
+            if (normalizedValue != currentValue)
+                if (normalizedValue > currentValue)
+                    _health.Increase(normalizedValue - currentValue);
                 else
-                    _health.Reduce(_health.CurrentValue - normalizedValue);
-        }
-
-        private void AddHeartItemUI() => _heartItems.Add(Instantiate(_heartItemPrefab, _heartItemsContainer.transform));
-
-        private void RemoveHeartItemUI()
-        {
-            if (_heartItems.Count == 0)
-                return;
-            
-            int lastIndex = _heartItems.Count - 1;
-            GameObject heartToRemove = _heartItems[lastIndex];
-            
-            Destroy(heartToRemove);
-            _heartItems.RemoveAt(lastIndex);
+                    _health.Reduce(currentValue - normalizedValue);
         }
 
         private void OnDestroy()
@@ -91,7 +65,7 @@ namespace Project.Timer
             _resetButton.onClick.RemoveListener(OnReset);
             
             _slider.onValueChanged.RemoveListener(OnSliderValueChanged);
-            _health.Changed -= OnHealthChanged;
+            _health.Current.Changed -= OnHealthChanged;
         }
     }
 }
