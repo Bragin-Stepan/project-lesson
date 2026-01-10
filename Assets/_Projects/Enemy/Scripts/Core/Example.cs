@@ -57,11 +57,11 @@ namespace Project.Enemy
                     enemy,
                     new List<Func<bool>>
                     {
-                        () => _destroyService.Count > _maxEnemiesCount
+                        () => _destroyService.ElementsCount > _maxEnemiesCount
                     });
             }
             
-            Debug.Log("[DestroyService] Count: " + _destroyService.Count);
+            Debug.Log("[DestroyService] Count: " + _destroyService.ElementsCount);
         }
     }
 }

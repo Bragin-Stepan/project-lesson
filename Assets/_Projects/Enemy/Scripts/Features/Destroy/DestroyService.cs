@@ -9,7 +9,7 @@ namespace Project.Enemy
         private readonly Dictionary<IDestroyable, List<Func<bool>>> _dictionary = new();
         private readonly MonoBehaviour _coroutineContext;
 
-        public int Count => _dictionary.Count;
+        public int ElementsCount => _dictionary.Count;
 
         public DestroyService(MonoBehaviour coroutineContext)
         {
