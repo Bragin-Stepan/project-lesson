@@ -5,6 +5,9 @@ namespace Project.Timer
 {
    public class Health
     {
+        public IReadOnlyVariable<int> Current => _current;
+        public IReadOnlyVariable<int> Max => _max;
+        
         private ReactiveVariable<int> _max;
         private ReactiveVariable<int> _current;
 
@@ -13,9 +16,6 @@ namespace Project.Timer
             _max = new ReactiveVariable<int>(maxValue);
             _current = new ReactiveVariable<int>(maxValue);
         }
-        
-        public IReadOnlyVariable<int> Current => _current;
-        public IReadOnlyVariable<int> Max => _max;
         
         public void Increase(int value)
         {

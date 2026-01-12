@@ -7,12 +7,12 @@ namespace Project.Timer
     {
         public event Action<TimerState> ChangedState;
         public event Action<float> Ticked;
-        
-        private float _tickInterval;
-        private float _nextTickTime;
 
         public float CurrentTime { get; private set; }
         public bool IsRunning { get; private set; }
+        
+        private float _tickInterval;
+        private float _nextTickTime;
         
         public TimerService(float tickInterval = 1.0f)
         {
