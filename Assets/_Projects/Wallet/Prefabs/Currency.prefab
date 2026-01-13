@@ -283,6 +283,7 @@ GameObject:
   - component: {fileID: 7031586525568289271}
   - component: {fileID: 4382125766824388659}
   - component: {fileID: 1499669682428453566}
+  - component: {fileID: 1463705325910757316}
   m_Layer: 5
   m_Name: Icon
   m_TagString: Untagged
@@ -347,6 +348,19 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &1463705325910757316
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5803280840370147339}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 55e2e3d73b4846f4af56f315d07e1913, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _iconImage: {fileID: 1499669682428453566}
 --- !u!1 &5822764188531227401
 GameObject:
   m_ObjectHideFlags: 0
@@ -448,8 +462,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a81a4e6893304b1eb14d2380011e97c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _iconImage: {fileID: 1499669682428453566}
-  _valueText: {fileID: 279781332050386268}
+  _icon: {fileID: 1463705325910757316}
+  _text: {fileID: 7603018259527330366}
 --- !u!1 &6463486603461538778
 GameObject:
   m_ObjectHideFlags: 0
@@ -462,6 +476,7 @@ GameObject:
   - component: {fileID: 4906762849287988586}
   - component: {fileID: 279781332050386268}
   - component: {fileID: 599123501791674975}
+  - component: {fileID: 7603018259527330366}
   m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
@@ -599,6 +614,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_HorizontalFit: 0
   m_VerticalFit: 0
+--- !u!114 &7603018259527330366
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6463486603461538778}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bee842d6483b47ec9d63e247c3a00992, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _valueText: {fileID: 279781332050386268}
 --- !u!1 &6548708773996363035
 GameObject:
   m_ObjectHideFlags: 0
