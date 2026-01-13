@@ -359,6 +359,7 @@ GameObject:
   - component: {fileID: 582048922748407608}
   - component: {fileID: 1070071065603901847}
   - component: {fileID: 1491746848280599327}
+  - component: {fileID: 8876936583185008305}
   m_Layer: 5
   m_Name: IconAndText
   m_TagString: Untagged
@@ -435,6 +436,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5822764188531227401}
   m_CullTransparentMesh: 1
+--- !u!114 &8876936583185008305
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5822764188531227401}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a81a4e6893304b1eb14d2380011e97c1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _iconImage: {fileID: 1499669682428453566}
+  _valueText: {fileID: 279781332050386268}
 --- !u!1 &6463486603461538778
 GameObject:
   m_ObjectHideFlags: 0
@@ -745,6 +760,7 @@ GameObject:
   - component: {fileID: 3031995053719084684}
   - component: {fileID: 3054512204538300909}
   - component: {fileID: 3937157568727535742}
+  - component: {fileID: 9126171915133910908}
   m_Layer: 5
   m_Name: Currency
   m_TagString: Untagged
@@ -820,8 +836,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f246bac7845642189033433f6d15cddf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _iconImage: {fileID: 1499669682428453566}
-  _valueText: {fileID: 279781332050386268}
+  _displayUI: {fileID: 8876936583185008305}
+  _buttonsUI: {fileID: 9126171915133910908}
+--- !u!114 &9126171915133910908
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7632194008523908072}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 08ad9936612545f0b0516750c0bd4294, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
   _addButton: {fileID: 5276592788241155676}
   _removeButton: {fileID: 8111226475773984801}
 --- !u!1 &8384831941522039432
