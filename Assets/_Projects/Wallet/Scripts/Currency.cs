@@ -6,15 +6,21 @@ namespace Project.Wallet
     [Serializable]
     public class Currency
     {
-        [SerializeField] private Sprite _icon;
-        [SerializeField] private CurrencyType _type;
+        public readonly Sprite Icon;
+        public readonly CurrencyType Type;
         
-        public Sprite Icon => _icon;
-        public CurrencyType Type => _type;
         public IReadOnlyVariable<int> Current => _current;
         
         private ReactiveVariable<int> _current = new ();
-        
+
+        public Currency(CurrencyConfig config)
+        {
+            Icon = config.Icon;
+            Type = config.Type;
+            
+            _current.Value = config.StartValue;
+        }
+
         public bool TryAdd (int value)
         {
             if (value < 0)

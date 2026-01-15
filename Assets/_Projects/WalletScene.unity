@@ -330,16 +330,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _walletUIPrefab: {fileID: 4432213805046449381, guid: a511c8d6850809d41aaecdae198a9b51, type: 3}
-  _currencies:
-  - _icon: {fileID: 21300000, guid: f709a9697180bfb43a04ea6253d14439, type: 3}
-    _currentValue: 123
-    _type: 0
-  - _icon: {fileID: 21300000, guid: 27c0ea10d9984974f8f2cd92c03e7187, type: 3}
-    _currentValue: 12
-    _type: 1
-  - _icon: {fileID: 21300000, guid: bfcd5148f5b780c4a906a1d25c64329c, type: 3}
-    _currentValue: 5
-    _type: 2
+  _currenciesConfig:
+  - Icon: {fileID: 21300000, guid: f709a9697180bfb43a04ea6253d14439, type: 3}
+    Type: 0
+    StartValue: 123
+  - Icon: {fileID: 21300000, guid: 27c0ea10d9984974f8f2cd92c03e7187, type: 3}
+    Type: 1
+    StartValue: 5
+  - Icon: {fileID: 21300000, guid: bfcd5148f5b780c4a906a1d25c64329c, type: 3}
+    Type: 2
+    StartValue: 1
 --- !u!1 &963194225
 GameObject:
   m_ObjectHideFlags: 0

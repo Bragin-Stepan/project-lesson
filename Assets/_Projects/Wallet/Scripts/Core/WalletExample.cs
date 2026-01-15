@@ -7,15 +7,28 @@ namespace Project.Wallet
     public class WalletExample: MonoBehaviour
     {
         [SerializeField] private WalletUI _walletUIPrefab;
-        [SerializeField] private List<Currency> _currencies;
+        [SerializeField] private List<CurrencyConfig> _currenciesConfig;
         
         private WalletService _walletService;
         private WalletUI _walletUI;
+        private List<Currency> _currencies = new();
 
         private void Awake()
         {
-            _walletService = new WalletService(_currencies);
+            SetupWallet();
+            SetupWalletUI();
+        }
 
+        private void SetupWallet()
+        {
+            foreach (CurrencyConfig config in _currenciesConfig)
+                _currencies.Add(new Currency(config));
+            
+            _walletService = new WalletService(_currencies);
+        }
+
+        private void SetupWalletUI()
+        {
             _walletUI = Instantiate(_walletUIPrefab, Vector3.zero, Quaternion.identity, null);
             _walletUI.Initialize(_walletService);
         }
