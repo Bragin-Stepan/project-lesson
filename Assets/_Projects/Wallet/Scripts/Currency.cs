@@ -6,7 +6,6 @@ namespace Project.Wallet
     [Serializable]
     public class Currency
     {
-        public readonly Sprite Icon;
         public readonly CurrencyType Type;
         
         public IReadOnlyVariable<int> Current => _current;
@@ -15,7 +14,6 @@ namespace Project.Wallet
 
         public Currency(CurrencyConfig config)
         {
-            Icon = config.Icon;
             Type = config.Type;
             
             _current.Value = config.StartValue;

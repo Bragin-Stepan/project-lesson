@@ -11,10 +11,12 @@ namespace Project.Wallet {
         [SerializeField] private CurrencyUI _currencyItemPrefab;
         
         private WalletService _walletService;
+        private CurrencyIconProvider _iconProvider;
 
-        public void Initialize(WalletService walletService)
+        public void Initialize(WalletService walletService, CurrencyIconProvider iconProvider)
         {
             _walletService = walletService;
+            _iconProvider = iconProvider;
             
             SetupCurrenciesUI();
         }
@@ -24,7 +26,7 @@ namespace Project.Wallet {
             foreach (Currency currency in _walletService.Currencies)
             {
                 CurrencyUI ui = Instantiate(_currencyItemPrefab, _currencyContainer);
-                ui.Initialize(currency);
+                ui.Initialize(currency, _iconProvider);
             }
         }
     }

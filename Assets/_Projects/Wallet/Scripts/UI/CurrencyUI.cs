@@ -11,9 +11,9 @@ namespace Project.Wallet {
         [SerializeField] private CurrencyDisplayUI _displayUI;
         [SerializeField] private CurrencyButtonsUI _buttonsUI;
         
-        public void Initialize(Currency currency)
+        public void Initialize(Currency currency, CurrencyIconProvider iconProvider)
         {
-            _displayUI.Initialize(currency);
+            _displayUI.Initialize(currency, iconProvider);
             _buttonsUI.Initialize(currency);
         }
     }

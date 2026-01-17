@@ -6,9 +6,9 @@ namespace Project.Wallet {
         [SerializeField] private CurrencyImageUI _icon;
         [SerializeField] private CurrencyTextUI _text;
         
-        public void Initialize(Currency currency)
+        public void Initialize(Currency currency, CurrencyIconProvider iconProvider)
         {
-            _icon.Initialize(currency.Icon);
+            _icon.Initialize(iconProvider.GetIconByType(currency.Type));
             _text.Initialize(currency);
         }
     }

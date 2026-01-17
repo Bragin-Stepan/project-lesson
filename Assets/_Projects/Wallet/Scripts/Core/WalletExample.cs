@@ -11,18 +11,22 @@ namespace Project.Wallet
         
         private WalletService _walletService;
         private WalletUI _walletUI;
+        private CurrencyIconProvider _iconProvider = new();
         private List<Currency> _currencies = new();
 
         private void Awake()
         {
-            SetupWallet();
+            SetupCurrencies();
             SetupWalletUI();
         }
 
-        private void SetupWallet()
+        private void SetupCurrencies()
         {
             foreach (CurrencyConfig config in _currenciesConfig)
+            {
+                _iconProvider.AddIcon(config.Type, config.Icon);
                 _currencies.Add(new Currency(config));
+            }
             
             _walletService = new WalletService(_currencies);
         }
@@ -30,7 +34,7 @@ namespace Project.Wallet
         private void SetupWalletUI()
         {
             _walletUI = Instantiate(_walletUIPrefab, Vector3.zero, Quaternion.identity, null);
-            _walletUI.Initialize(_walletService);
+            _walletUI.Initialize(_walletService, _iconProvider);
         }
 
         private void Update()
