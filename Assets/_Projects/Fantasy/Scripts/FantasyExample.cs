@@ -15,34 +15,27 @@ namespace Project.Fantasy
         [SerializeField] private List<ElfConfigSO> _elfConfigs;
         [SerializeField] private List<DragonConfigSO> _dragonConfigs;
         
-        private ObjectSpawner _spawner = new();
-
         private const int CharacterSpawnCount = 3;
+        private readonly EnemySpawner _spawner = new();
 
         private void Awake()
         {
             for (int i = 0; i < CharacterSpawnCount; i++)
             {
                OrkConfigSO config = _orkConfigs[Random.Range(0, _orkConfigs.Count)];
-                
-               Ork ork = _spawner.SpawnToPoint(config.Prefab, _orkSpawnPoint);
-               ork.Initialize(config);
+               _spawner.SpawnToPoint(config, _orkSpawnPoint);
             }
-            
+
             for (int i = 0; i < CharacterSpawnCount; i++)
             {
                 ElfConfigSO config = _elfConfigs[Random.Range(0, _elfConfigs.Count)];
-                
-                Elf elf = _spawner.SpawnToPoint(config.Prefab, _elfSpawnPoint);
-                elf.Initialize(config);
+                _spawner.SpawnToPoint(config, _elfSpawnPoint);
             }
-            
+
             for (int i = 0; i < CharacterSpawnCount; i++)
             {
                 DragonConfigSO config = _dragonConfigs[Random.Range(0, _dragonConfigs.Count)];
-                
-                Dragon dragon = _spawner.SpawnToPoint(config.Prefab, _dragonSpawnPoint);
-                dragon.Initialize(config);
+                _spawner.SpawnToPoint(config, _dragonSpawnPoint);
             }
         }
     }

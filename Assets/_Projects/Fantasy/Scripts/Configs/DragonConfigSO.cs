@@ -3,7 +3,7 @@
 namespace Project.Fantasy
 {
     [CreateAssetMenu(fileName = "Dragon Data", menuName = "Game/Fantasy/Dragon Data")]
-    public class DragonConfigSO : CharacterConfigSO
+    public class DragonConfigSO : EnemyConfigSO
     {
         [field:SerializeField] public Dragon Prefab { get; private set; }
         

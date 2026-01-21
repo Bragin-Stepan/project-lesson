@@ -2,7 +2,7 @@
 
 namespace Project.Fantasy
 {
-    public abstract class CharacterConfigSO : ScriptableObject
+    public abstract class EnemyConfigSO : ScriptableObject
     {
         [field:SerializeField] public float MoveSpeed { get; private set; }
         [field:SerializeField] public float Mana { get; private set; }
