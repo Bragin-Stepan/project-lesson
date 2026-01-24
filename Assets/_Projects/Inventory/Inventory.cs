@@ -1,43 +1,43 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Project.Inventory
 {
     public class Inventory<T>
     {
-        public IReadOnlyList<T> Items => _items;
-        public IReadOnlyVariable<int> MaxSize => _maxSize;
-        public IReadOnlyVariable<int> CurrentSize => new ReactiveVariable<int>(_items.Count);
-        public IReadOnlyVariable<bool> IsFull => new ReactiveVariable<bool>(CurrentSize.Value == _maxSize.Value);
+        public int MaxSize { get; private set; }
 
-        private ReactiveVariable<int> _maxSize;
         private List<T> _items;
     
         public Inventory(List<T> items, int maxSize)
         {
             _items = new List<T>(items);
-            _maxSize = new ReactiveVariable<int>(maxSize);
-        }
-
-        public void Add(T item)
-        {
-            if (IsFull.Value)
-                return;
-            
-            _items.Add(item);
-        }
-
-        public void Remove(T item)
-        {
-            if (_items.Contains(item) == false)
-                return;
-            
-            _items.Remove(item);
+            MaxSize = maxSize;
         }
         
-        public IReadOnlyList<T> GetItemsBy(Func<T, bool> filter)
+        public IReadOnlyList<T> Items => _items;
+        public int CurrentSize => _items.Count;
+        public bool IsFull => CurrentSize == MaxSize;
+
+        public bool TryAdd(T item)
+        {
+            if (IsFull)
+                return false;
+            
+            _items.Add(item);
+            return true;
+        }
+
+        public bool TryRemove(T item)
+        {
+            if (_items.Contains(item) == false)
+                return false;
+            
+            _items.Remove(item);
+            return true;
+        }
+        
+        public List<T> GetItemsBy(Func<T, bool> filter)
         {
             List<T> result = new ();
             
