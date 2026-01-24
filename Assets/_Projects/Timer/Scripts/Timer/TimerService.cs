@@ -6,13 +6,13 @@ namespace Project.Timer
     public class TimerService
     {
         public event Action<TimerState> ChangedState;
-        public event Action<float> Ticked;
 
         public float CurrentTime { get; private set; }
-        public bool IsRunning { get; private set; }
+        
+        private ReactiveVariable<bool> _isRunning { get; } = new ();
+        private ReactiveVariable<float> _nextTickTime { get; } = new();
         
         private float _tickInterval;
-        private float _nextTickTime;
         
         public TimerService(float tickInterval = 1.0f)
         {
@@ -20,36 +20,36 @@ namespace Project.Timer
             
             ResetTick();
         }
+        
+        public IReadOnlyVariable<bool> IsRunning => _isRunning;
+        public IReadOnlyVariable<float> NextTickTime => _nextTickTime;
 
         public void Update(float deltaTime)
         {
-            if (IsRunning == false || _tickInterval <= 0)
+            if (_isRunning.Value == false || _tickInterval <= 0)
                 return;
 
             CurrentTime += deltaTime;
             
-            while (CurrentTime >= _nextTickTime)
-            {
-                Ticked?.Invoke(_nextTickTime);
-                _nextTickTime += _tickInterval;
-            }
+            while (CurrentTime >= _nextTickTime.Value)
+                _nextTickTime.Value += _tickInterval;
         }
 
         public void Start()
         {
-            IsRunning = true;
+            _isRunning.Value = true;
             ChangedState?.Invoke(TimerState.Start);
         }
 
         public void Pause()
         {
-            IsRunning = false;
+            _isRunning.Value = false;
             ChangedState?.Invoke(TimerState.Pause);
         }
 
         public void Stop()
         {
-            IsRunning = false;
+            _isRunning.Value = false;
             ResetTick();
             ChangedState?.Invoke(TimerState.Stop);
         }
@@ -68,7 +68,7 @@ namespace Project.Timer
                 return;
             
             float roundedTime = Mathf.Floor(CurrentTime / _tickInterval);
-            _nextTickTime = (roundedTime + 1) * _tickInterval;
+            _nextTickTime.Value = (roundedTime + 1) * _tickInterval;
         }
     }
 }

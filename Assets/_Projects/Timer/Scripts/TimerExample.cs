@@ -18,7 +18,7 @@ namespace Project.Timer
             _health = new Health(MaxCount);
             _timerService = new TimerService();
 
-            _timerService.Ticked += OnTicked;
+            _timerService.NextTickTime.Changed += OnTicked;
             _timerService.Start();
 
             _ui = Instantiate(_uiPrefab, Vector3.zero, Quaternion.identity, null);
@@ -30,7 +30,7 @@ namespace Project.Timer
             _timerService.Update(Time.deltaTime);
         }
         
-        private void OnTicked(float time)
+        private void OnTicked(float oldTime, float time)
         {
             Debug.Log("Time: " + time);
             
@@ -42,7 +42,7 @@ namespace Project.Timer
 
         private void OnDestroy()
         {
-            _timerService.Ticked -= OnTicked;
+            _timerService.NextTickTime.Changed -= OnTicked;
         }
     }
 }
